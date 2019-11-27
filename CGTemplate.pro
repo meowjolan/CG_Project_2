@@ -6,10 +6,6 @@ CONFIG += console qt c++11
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
-LIBS += \
-	Glu32.lib \
-	OpenGL32.lib
-
 SOURCES += \
     main.cpp \
     myglwidget.cpp
