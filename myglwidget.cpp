@@ -8,9 +8,7 @@
 // 手臂运动的角度速
 #define ARM_ANG_VEL 5.0f
 // 大腿运动的角速度
-#define LEG_ANG_VEL_1 5.0f
-// 小腿运动的角速度
-#define LEG_ANG_VEL_2 5.0f
+#define LEG_ANG_VEL 5.0f
 // 机器人运动半径
 #define MOVE_RADIUS 80.0f
 
@@ -211,18 +209,13 @@ void MyGLWidget::DrawBodyPart(float length, float width, float height, float x_s
 void MyGLWidget::DrawBody()
 {
 	// 大腿运动的角度
-	static float leg_angle_1 = 0.0f;
-	leg_angle_1 = (leg_angle_1 + LEG_ANG_VEL_1) >= 180.0f? 0.0f : (leg_angle_1 + LEG_ANG_VEL_1);
-	leg_angle_1 = leg_angle_1 >= 90? -leg_angle_1 : leg_angle_1;
-
-	// 小腿运动的角度
-	static float leg_angle_2 = 0.0f;
-	leg_angle_2 = (leg_angle_2 + LEG_ANG_VEL_2) >= 180.0f? 0.0f : (leg_angle_2 + LEG_ANG_VEL_2);
-	leg_angle_2 = leg_angle_2 >= 90? -leg_angle_2 : leg_angle_2;
+	static float leg_angle = 0.0f;
+	leg_angle = (leg_angle + LEG_ANG_VEL) >= 180.0f? 0.0f : (leg_angle + LEG_ANG_VEL);
+	leg_angle = leg_angle >= 90? -leg_angle : leg_angle;
 
 	// 要抬哪一条腿
 	static float which_leg = 0.0f;
-	which_leg = (which_leg + LEG_ANG_VEL_1) >= 360.0f? 0.0f : (which_leg + LEG_ANG_VEL_1);
+	which_leg = (which_leg + LEG_ANG_VEL) >= 360.0f? 0.0f : (which_leg + LEG_ANG_VEL);
 
 	// 绘制头部
 	DrawBodyPart(4.0f, 4.0f, 4.0f, 0.0f, 0.0f, 38.5f, 25.0f, 202.0f, 173.0f);
@@ -243,9 +236,9 @@ void MyGLWidget::DrawBody()
 	// 悬浮的那条腿
 	glPushMatrix();
 	glTranslatef(leg_shift, 0.0f, 22.0f);
-	glRotatef(abs(leg_angle_1), 1.0f, 0.0f, 0.0f);
+	glRotatef(abs(leg_angle), 1.0f, 0.0f, 0.0f);
 	glTranslatef(0.0f, 0.0f, -22.0f);
-	DrawLeg(-abs(leg_angle_2));
+	DrawLeg(-abs(leg_angle));
 	glPopMatrix();
 
 	// 触地的那条腿
@@ -261,7 +254,7 @@ void MyGLWidget::DrawBody()
 	// 旋转的那只手
 	glPushMatrix();
 	glTranslatef(hand_shift, 0.0f, 38.0f);
-	glRotatef(abs(leg_angle_1), 1.0f, 0.0f, 0.0f);
+	glRotatef(abs(leg_angle), 1.0f, 0.0f, 0.0f);
 	DrawBodyPart(2.0f, 2.0f, 18.0f, 0.0f, 0.0f, -18.0f, 224.0f, 96.0f, 108.0f);
 	glPopMatrix();
 
